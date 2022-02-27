@@ -26,6 +26,14 @@ void init_table(int n) {
     }
 }
 
+void delete_table(int n) {
+    for(int i = 0; i < n + 5; ++i) {
+        delete [] table[i];
+    }
+    
+    delete [] table;
+}
+
 int max_int(int a, int b) {
     int res = 0;
     if(a > b) { res = a; }
@@ -72,6 +80,8 @@ int cost(std::vector<int> B) {
     init_table(size);
     
     res = max_int(cost_func(B, 1, false), cost_func(B, 1, true));
+    
+    delete_table(size);
     
     return res;
 }
