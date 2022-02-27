@@ -35,36 +35,6 @@ int max_int(int a, int b) {
 }
 
 int cost_func(std::vector<int> & B, int n, bool prev_is_one) {
-    int res = 0;
-    
-    if(table[n][prev_is_one].is_set) {
-        return table[n][prev_is_one].val;
-    }
-    
-    int size = (int) B.size();
-    int max_loc = 0;
-    
-    if(n < size) {
-        if(prev_is_one) {
-            int max_ll = abs(B[n] - 1) + cost_func(B, n + 1, false);
-            max_loc = max_int(max_loc, max_ll);
-        }
-        if(!prev_is_one) {
-            int max_ll1 = abs(B[n - 1] - 1) + cost_func(B, n + 1, true);
-            int max_ll2 = abs(B[n] - B[n - 1]) + cost_func(B, n + 1, false);
-            int max_ll = max_int(max_ll1, max_ll2);
-            max_loc = max_int(max_loc, max_ll);
-        }
-    }
-    
-    res = max_loc;
-    table[n][prev_is_one].is_set = true;
-    table[n][prev_is_one].val = res;
-    
-    return res;
-}
-
-int cost_func2(std::vector<int> & B, int n, bool prev_is_one) {
     int max = 0;
     
     int size = (int) B.size();
@@ -75,14 +45,14 @@ int cost_func2(std::vector<int> & B, int n, bool prev_is_one) {
     
     if(n < size) {
         if(prev_is_one) {
-            int max_ll1 = abs(B[n] - 1) + cost_func2(B, n + 1, false);
-            int max_ll2 = cost_func2(B, n + 1, true);
+            int max_ll1 = abs(B[n] - 1) + cost_func(B, n + 1, false);
+            int max_ll2 = cost_func(B, n + 1, true);
             int max_loc = max_int(max_ll1, max_ll2);
             max = max_int(max, max_loc);
         }
         if(!prev_is_one) {
-            int max_ll1 = abs(B[n - 1] - 1) + cost_func2(B, n + 1, true);
-            int max_ll2 = abs(B[n] - B[n - 1]) + cost_func2(B, n + 1, false);
+            int max_ll1 = abs(B[n - 1] - 1) + cost_func(B, n + 1, true);
+            int max_ll2 = abs(B[n] - B[n - 1]) + cost_func(B, n + 1, false);
             int max_loc = max_int(max_ll1, max_ll2);
             max = max_int(max, max_loc);
         }
@@ -101,7 +71,7 @@ int cost(std::vector<int> B) {
     
     init_table(size);
     
-    res = max_int(cost_func2(B, 1, false), cost_func2(B, 1, true));
+    res = max_int(cost_func(B, 1, false), cost_func(B, 1, true));
     
     return res;
 }
