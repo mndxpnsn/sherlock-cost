@@ -2,7 +2,7 @@
 //  main.cpp
 //  SherlockAndCost
 //
-//  Created by Derek Harrison on 27/02/2022.
+//  Created by mndx on 27/02/2022.
 //
 
 #include <iostream>
